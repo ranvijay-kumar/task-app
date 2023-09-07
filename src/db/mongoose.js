@@ -41,6 +41,19 @@ const User = mongoose.model("User", {
     },
 });
 
+const Task = mongoose.model("Task", {
+    description: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    completed: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
+});
+
 function createUser(name, email, password, age) {
     let user = new User({
         name: name,
@@ -57,4 +70,18 @@ function createUser(name, email, password, age) {
             // mongoose.close();
         });
 }
-createUser("rohan", "abc@gmail.com", "hcsvdgds");
+
+function createTask(description, completed) {
+    let task = new Task({ description: description, completed: completed });
+    task.save()
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {});
+}
+
+// createUser("rohan", "abc@gmail.com", "hcsvdgds");
+createTask("write notes on conjuction");
