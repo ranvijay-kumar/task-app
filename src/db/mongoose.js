@@ -16,6 +16,19 @@ const User = mongoose.model("User", {
             }
         },
     },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+            if (value.length <= 6) {
+                throw new Error("Password too short");
+            }
+            if (value.includes("password")) {
+                throw new Error("Password cannot include password");
+            }
+        },
+    },
     age: {
         type: Number,
         required: false,
@@ -28,13 +41,20 @@ const User = mongoose.model("User", {
     },
 });
 
-let andrew = new User({ name: "andrew njvbfs  ", email: "abc@gmail.com" });
-andrew
-    .save()
-    .then((result) => console.log(result))
-    .catch((error) => {
-        console.log(error);
-    })
-    .finally(() => {
-        // mongoose.close();
+function createUser(name, email, password, age) {
+    let user = new User({
+        name: name,
+        email: email,
+        password: password,
+        age: age,
     });
+    user.save()
+        .then((result) => console.log(result))
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            // mongoose.close();
+        });
+}
+createUser("rohan", "abc@gmail.com", "hcsvdgds");
