@@ -31,4 +31,17 @@ router.get("/tasks/:id", async (req, res) => {
     }
 });
 
+router.delete("/tasks/:id", async (req,res)=>{
+    let _id = req.params.id;
+    try {
+        let task = await Task.findByIdAndDelete({_id});
+        if(!task) {
+            res.status(404).send();
+        }
+        res.status(200).send(task);
+    } catch(error) {
+        res.status(500).send(error);
+    }
+});
+
 module.exports = router;
