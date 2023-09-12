@@ -9,7 +9,6 @@ router.post("/users", async (req, res) => {
         res.status(201).send(user);
     } catch (error) {
         res.status(400).send(error);
-        console.log(error);
     }
 });
 
@@ -44,6 +43,19 @@ router.delete("/users/:id", async (req, res) => {
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send(error);
+    }
+});
+
+router.post("/users/login", async (req, res) => {
+    try {
+        let user = await User.findByCredentials(
+            req.body.email,
+            req.body.password
+        );
+        const token = await user.generateAuthToken();
+        return res.send({ login: "Success", token: token });
+    } catch (error) {
+        res.status(400).send(error);
     }
 });
 
