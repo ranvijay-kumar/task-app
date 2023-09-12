@@ -3,7 +3,6 @@ const app = express();
 require("./src/db/mongoose");
 const userRouter = require("./src/routers/user");
 const taskRouter = require("./src/routers/task");
-const jwt = require("jsonwebtoken");
 
 const port = process.env.port || 3000;
 
