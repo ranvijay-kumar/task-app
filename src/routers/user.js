@@ -71,4 +71,26 @@ router.post("/users/logout", auth, async (req, res) => {
     }
 });
 
+router.post("/users/logoutAll", auth, async (req, res) => {
+    try {
+        req.user.tokens = [];
+        await req.user.save();
+        res.send({ logout: "Success" });
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+router.post("/users/logoutOtherSessions", auth, async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token == req.token;
+        });
+        await req.user.save();
+        res.send({ logout: "Success" });
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
 module.exports = router;
