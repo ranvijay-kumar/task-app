@@ -18,18 +18,6 @@ router.get("/users/me", auth, async (req, res) => {
         res.status(200).send(req.user);
     } catch (error) {
         res.status(500).send(error);
-        console.log(error);
-    }
-});
-
-router.get("/users/:id", async (req, res) => {
-    let _id = req.params.id;
-    try {
-        let users = await User.findById({ _id });
-        res.status(200).send(users);
-    } catch (error) {
-        res.status(500).send(error);
-        console.log(error);
     }
 });
 
@@ -56,7 +44,6 @@ router.patch("/users/me", auth, async (req, res) => {
 router.delete("/users/me", auth, async (req, res) => {
     try {
         await User.deleteOne({ _id: req.user._id });
-        // await req.user.remove();
         res.status(200).send(req.user);
     } catch (error) {
         res.status(500).send(error);
@@ -85,7 +72,7 @@ router.post("/users/logout", auth, async (req, res) => {
         await req.user.save();
         res.send({ logout: "Success" });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
     }
 });
 
@@ -95,7 +82,7 @@ router.post("/users/logoutAll", auth, async (req, res) => {
         await req.user.save();
         res.send({ logout: "Success" });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
     }
 });
 
