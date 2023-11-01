@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema({
             },
         },
     ],
+    profile_pic: {
+        type: Buffer
+    },
 });
 
 userSchema.virtual("task", {
